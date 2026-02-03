@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://sijd8jahgrlv"]
+
+[ext_resource type="Script" uid="uid://bis6yevvf3w2t" path="res://Scripts/enemy.gd" id="1_0830c"]
+[ext_resource type="Texture2D" uid="uid://c3mwxscbr0ybk" path="res://Assets/kenney_space-shooter-redux/PNG/Enemies/enemyGreen3.png" id="1_afpow"]
+[ext_resource type="Script" uid="uid://b0bxcdpjyny13" path="res://Components/health_component.gd" id="1_hghv2"]
+[ext_resource type="Script" uid="uid://c4rqqk3w83wjx" path="res://Components/hurtbox_component.gd" id="2_1f0kj"]
+[ext_resource type="PackedScene" uid="uid://cm2nh2r5vg1xf" path="res://Scenes/gun.tscn" id="4_287tu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0830c"]
+radius = 45.607018
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_287tu"]
+radius = 46.010868
+
+[node name="Enemy" type="RigidBody2D" unique_id=1212943799]
+rotation = 3.1415927
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_0830c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1321267888]
+shape = SubResource("CircleShape2D_0830c")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1492827460]
+texture = ExtResource("1_afpow")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=85741035]
+script = ExtResource("1_hghv2")
+max_health = 50.0
+metadata/_custom_type_script = "uid://b0bxcdpjyny13"
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=775736525 node_paths=PackedStringArray("health")]
+collision_layer = 64
+collision_mask = 32
+script = ExtResource("2_1f0kj")
+health = NodePath("../HealthComponent")
+team = 1
+metadata/_custom_type_script = "uid://c4rqqk3w83wjx"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1590067103]
+shape = SubResource("CircleShape2D_287tu")
+debug_color = Color(0.6125828, 0.078179546, 0.11662006, 0.41960785)
+
+[node name="Gun" parent="." unique_id=198850117 instance=ExtResource("4_287tu")]
+team = 1

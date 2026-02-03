@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://d1l8v01uuks8u"]
+
+[ext_resource type="Script" uid="uid://f14wrxvubswq" path="res://Scripts/main.gd" id="1_21xkr"]
+[ext_resource type="Texture2D" uid="uid://d4nx0g7f0kplp" path="res://Assets/kenney_space-shooter-redux/Backgrounds/blue.png" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://daowtj0m40adc" path="res://Scenes/space_ship.tscn" id="3_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://lqwefg2c7qo0" path="res://Scenes/main_menu.tscn" id="4_kry3j"]
+[ext_resource type="Script" uid="uid://dd1a5058q6aot" path="res://Scripts/obstacle_spawner.gd" id="5_kry3j"]
+[ext_resource type="Script" uid="uid://c71bms3dxrg8w" path="res://Scenes/health_label.gd" id="6_21xkr"]
+[ext_resource type="Script" uid="uid://ctvu4u0qlcmqh" path="res://Scenes/obstacle_destroyer.gd" id="7_6bp64"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8gbba"]
+normal = Vector2(0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6bp64"]
+font_size = 72
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6bp64"]
+size = Vector2(732, 167)
+
+[node name="Main" type="Node2D" unique_id=324432923]
+script = ExtResource("1_21xkr")
+
+[node name="Background" type="Parallax2D" parent="." unique_id=1728628335]
+repeat_size = Vector2(0, 1000)
+autoscroll = Vector2(0, 500)
+
+[node name="Blue" type="Sprite2D" parent="Background" unique_id=9293264]
+texture_repeat = 2
+position = Vector2(339, 641)
+texture = ExtResource("1_jjgbg")
+region_enabled = true
+region_rect = Rect2(0, 0, 1024, 1280)
+
+[node name="Boundary" type="StaticBody2D" parent="." unique_id=1318408694]
+
+[node name="Bottom" type="CollisionShape2D" parent="Boundary" unique_id=715763944]
+position = Vector2(722, 1281)
+rotation = -3.1415927
+shape = SubResource("WorldBoundaryShape2D_8gbba")
+
+[node name="Top" type="CollisionShape2D" parent="Boundary" unique_id=1096894443]
+shape = SubResource("WorldBoundaryShape2D_8gbba")
+
+[node name="Left" type="CollisionShape2D" parent="Boundary" unique_id=1372938439]
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_8gbba")
+
+[node name="Right" type="CollisionShape2D" parent="Boundary" unique_id=611350817]
+position = Vector2(722, 1281)
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_8gbba")
+
+[node name="SpaceShip" parent="." unique_id=1403481491 instance=ExtResource("3_jjvhh")]
+unique_name_in_owner = true
+position = Vector2(89, 1135)
+
+[node name="MainMenu" parent="." unique_id=890917682 instance=ExtResource("4_kry3j")]
+
+[node name="Bullets" type="Node2D" parent="." unique_id=554713326]
+
+[node name="ObstacleSpawner" type="Node2D" parent="." unique_id=1530928460]
+position = Vector2(334, 0)
+script = ExtResource("5_kry3j")
+
+[node name="SpawnTimer" type="Timer" parent="ObstacleSpawner" unique_id=1660909264]
+wait_time = 3.0
+
+[node name="Point1" type="Marker2D" parent="ObstacleSpawner" unique_id=2015054764]
+position = Vector2(-302, -18)
+
+[node name="Point2" type="Marker2D" parent="ObstacleSpawner" unique_id=470769840]
+position = Vector2(349, -18)
+
+[node name="HealthLabel" type="Label" parent="." unique_id=265629655]
+visible = false
+offset_right = 270.0
+offset_bottom = 99.0
+text = "Health : "
+label_settings = SubResource("LabelSettings_6bp64")
+script = ExtResource("6_21xkr")
+
+[node name="ObstacleDestroyer" type="Node2D" parent="." unique_id=1101867084]
+script = ExtResource("7_6bp64")
+
+[node name="ObstacleDestroyRegion" type="Area2D" parent="ObstacleDestroyer" unique_id=1282286654]
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleDestroyer/ObstacleDestroyRegion" unique_id=1349792402]
+position = Vector2(362, 1374)
+shape = SubResource("RectangleShape2D_6bp64")
+
+[connection signal="timeout" from="ObstacleSpawner/SpawnTimer" to="ObstacleSpawner" method="_on_spawn_timer_timeout"]
+[connection signal="body_entered" from="ObstacleDestroyer/ObstacleDestroyRegion" to="ObstacleDestroyer" method="_on_obstacle_destroy_region_body_entered"]

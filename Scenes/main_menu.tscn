@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://lqwefg2c7qo0"]
+
+[ext_resource type="Script" uid="uid://bih2k68th7pwd" path="res://Scripts/control.gd" id="1_1ehe0"]
+[ext_resource type="FontFile" uid="uid://cw7oxslfjx34i" path="res://Assets/kenney_ui-pack/Font/Kenney Future Narrow.ttf" id="2_ce3w2"]
+[ext_resource type="Texture2D" uid="uid://cv578cw0s2mc6" path="res://Assets/kenney_space-shooter-redux/PNG/playerShip1_blue.png" id="3_n45e2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kry3j"]
+font = ExtResource("2_ce3w2")
+font_size = 110
+
+[node name="MainMenu" type="Control" unique_id=890917682]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_right = 718.0
+offset_bottom = 1281.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1ehe0")
+
+[node name="TitleLabel" type="Label" parent="." unique_id=837692244]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -359.0
+offset_top = 154.0
+offset_right = 359.0
+offset_bottom = 407.0
+grow_horizontal = 2
+text = "Space Shooter"
+label_settings = SubResource("LabelSettings_kry3j")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ChangeSkinButton" type="Button" parent="." unique_id=961808864]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -207.0
+offset_top = 890.0
+offset_right = 208.0
+offset_bottom = 993.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 69
+text = "Change Skin"
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=136206698]
+position = Vector2(363, 676.00006)
+scale = Vector2(2.78, 2.78)
+texture = ExtResource("3_n45e2")
+
+[node name="PlayButton" type="Button" parent="." unique_id=1214762796]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -115.0
+offset_top = -213.0
+offset_right = 119.0
+offset_bottom = -110.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 69
+text = "Play
+"
+
+[connection signal="pressed" from="ChangeSkinButton" to="." method="_on_change_skin_button_pressed"]
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]

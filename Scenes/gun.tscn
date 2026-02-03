@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cm2nh2r5vg1xf"]
+
+[ext_resource type="Script" uid="uid://b7trtu5mfr8s7" path="res://Scripts/gun.gd" id="1_oqrbh"]
+
+[node name="Gun" type="Node2D" unique_id=198850117]
+script = ExtResource("1_oqrbh")
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=1967475971]
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

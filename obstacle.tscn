@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cyxkirl2332r1"]
+
+[ext_resource type="Texture2D" uid="uid://d1lnn4y7kf8o1" path="res://Assets/kenney_space-shooter-redux/PNG/Meteors/meteorBrown_big1.png" id="1_aubd6"]
+[ext_resource type="Script" uid="uid://mphbpkus4b1r" path="res://obstacle.gd" id="1_vcivv"]
+[ext_resource type="Script" uid="uid://dm00wksbdes1e" path="res://Components/hitbox_component.gd" id="2_vcivv"]
+[ext_resource type="Script" uid="uid://c4rqqk3w83wjx" path="res://Components/hurtbox_component.gd" id="4_fvdov"]
+[ext_resource type="Script" uid="uid://b0bxcdpjyny13" path="res://Components/health_component.gd" id="5_c2epm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tyhon"]
+radius = 40.60788
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fvdov"]
+radius = 41.04875
+
+[node name="Obstacle" type="RigidBody2D" unique_id=169852487]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_vcivv")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=898679384]
+texture = ExtResource("1_aubd6")
+
+[node name="HitboxComponent" type="Area2D" parent="." unique_id=1267604999]
+collision_layer = 32
+collision_mask = 64
+script = ExtResource("2_vcivv")
+team = 1
+metadata/_custom_type_script = "uid://dm00wksbdes1e"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=2123508584]
+position = Vector2(-1, -2)
+shape = SubResource("CircleShape2D_tyhon")
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=1184549677 node_paths=PackedStringArray("health")]
+collision_layer = 64
+collision_mask = 32
+script = ExtResource("4_fvdov")
+health = NodePath("../HealthComponent")
+team = 1
+metadata/_custom_type_script = "uid://c4rqqk3w83wjx"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=587288767]
+position = Vector2(-1, -2)
+shape = SubResource("CircleShape2D_tyhon")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=2031606785]
+script = ExtResource("5_c2epm")
+max_health = 20.0
+metadata/_custom_type_script = "uid://b0bxcdpjyny13"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=853805835]
+shape = SubResource("CircleShape2D_fvdov")

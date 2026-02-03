@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://daowtj0m40adc"]
+
+[ext_resource type="Script" uid="uid://db2b8bcpwi8vs" path="res://Scripts/shape_ship.gd" id="1_v7rv1"]
+[ext_resource type="Texture2D" uid="uid://cv578cw0s2mc6" path="res://Assets/kenney_space-shooter-redux/PNG/playerShip1_blue.png" id="2_l26kc"]
+[ext_resource type="PackedScene" uid="uid://cm2nh2r5vg1xf" path="res://Scenes/gun.tscn" id="3_tjtyp"]
+[ext_resource type="Script" uid="uid://b0bxcdpjyny13" path="res://Components/health_component.gd" id="4_tjtyp"]
+[ext_resource type="Script" uid="uid://c4rqqk3w83wjx" path="res://Components/hurtbox_component.gd" id="5_ae6vb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jjvhh"]
+radius = 38.013157
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tjtyp"]
+radius = 45.01111
+
+[node name="SpaceShip" type="CharacterBody2D" unique_id=1403481491]
+collision_layer = 4
+script = ExtResource("1_v7rv1")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1828417494]
+texture = ExtResource("2_l26kc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=83212976]
+shape = SubResource("CircleShape2D_jjvhh")
+
+[node name="Gun" parent="." unique_id=198850117 instance=ExtResource("3_tjtyp")]
+position = Vector2(0, -35)
+
+[node name="HealthComponent" type="Node" parent="." unique_id=238505587]
+script = ExtResource("4_tjtyp")
+immortality = true
+curr_health = 100.0
+metadata/_custom_type_script = "uid://b0bxcdpjyny13"
+
+[node name="HurtboxComponent" type="Area2D" parent="." unique_id=490700390 node_paths=PackedStringArray("health")]
+collision_layer = 64
+collision_mask = 32
+script = ExtResource("5_ae6vb")
+health = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://c4rqqk3w83wjx"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=915306109]
+shape = SubResource("CircleShape2D_tjtyp")
+debug_color = Color(0.97540563, 0.1587148, 5.7756904e-07, 0.41960785)

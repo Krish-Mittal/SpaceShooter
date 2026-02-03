@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://c41xw7t0fc413"]
+
+[ext_resource type="Script" uid="uid://c837d2x6y33am" path="res://Scripts/bullet.gd" id="1_oduel"]
+[ext_resource type="Texture2D" uid="uid://doy0ytn4j0guy" path="res://Assets/kenney_space-shooter-redux/PNG/Parts/beam0.png" id="1_xjght"]
+[ext_resource type="Script" uid="uid://dm00wksbdes1e" path="res://Components/hitbox_component.gd" id="3_ycag2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6afsh"]
+size = Vector2(20, 47)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oduel"]
+radius = 8.0
+height = 22.0
+
+[node name="Bullet" type="RigidBody2D" unique_id=1449065696]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_oduel")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=17677186]
+position = Vector2(0.5000005, -24.116352)
+rotation = 1.5707964
+scale = Vector2(2.076839, 1)
+texture = ExtResource("1_xjght")
+region_enabled = true
+region_rect = Rect2(0, 5, 23, 21)
+
+[node name="LifetimeTimer" type="Timer" parent="." unique_id=594477588]
+wait_time = 2.0
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2050533905]
+position = Vector2(0, -23.5)
+shape = SubResource("RectangleShape2D_6afsh")
+
+[node name="HitboxComponent" type="Area2D" parent="." unique_id=1319914235]
+collision_layer = 32
+collision_mask = 64
+script = ExtResource("3_ycag2")
+damage = 20.0
+team = 1
+metadata/_custom_type_script = "uid://dm00wksbdes1e"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=526818932]
+position = Vector2(0.5, -35.732704)
+shape = SubResource("CapsuleShape2D_oduel")
+debug_color = Color(0.88235295, 0, 0, 0.41960785)
+
+[connection signal="timeout" from="LifetimeTimer" to="." method="_on_lifetime_timer_timeout"]
